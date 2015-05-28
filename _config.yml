@@ -1,5 +1,5 @@
 # Site settings
-title: tvsync
+title: TVSync
 ngAppName: app
 exclude:
   - "package.json"
@@ -11,6 +11,10 @@ exclude:
   - "*.jade"
 email: yuri.malakhov87@gmail.com
 github: https://github.com/yuriMalakhov/tvsync
-description: "This is a default prototype tvsync."
+description: "Платформа TVSync позволяет повышать
+              эффективность рекламных кампаний
+              за счет синхронизации онлайн-рекламы
+              и телевизионной рекламы."
+keywords: "AdSync, рекламная кампания, реклама, онлайн-реклама, телевизионная реклама, синхронизация рекламы, повышение эффективности"
 baseurl: ""
 url: ""
