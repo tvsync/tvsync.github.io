@@ -1,0 +1,25 @@
+//Common variables
+@font-size-base: 10px;
+@background-color: #fff;
+@text-color: #232830;
+@text-grey: #7f7f7f;
+//Content variables
+@content-width-base: 1130px;
+@content-margin: 16px 0;
+@content-inner-radius: 3px;
+//Header variables
+@header-height: 90px;
+@header-background-color: #e5e9ea;
+//Footer variables
+@footer-height: 49px;
+@footer-background-color: #72b1dd;
+.clearfix() {
+	&:before,
+	&:after {
+		content: " ";
+		display: table;
+	}
+	&:after {
+		clear: both;
+	}
+}

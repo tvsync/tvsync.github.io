@@ -1,0 +1,17 @@
+.footer {
+  position: absolute;
+  font-size: 1.3rem;
+  bottom: 0;
+  width: 100%;
+  height: 49px;
+  background-color: #72b1dd;
+}
+.footer_inner {
+  width: 1130px;
+  height: 100%;
+  margin: 0 auto;
+}
+.footer_project-author {
+  line-height: 49px;
+  text-align: right;
+}

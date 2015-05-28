@@ -1,0 +1,99 @@
+<div ng-controller="MainController" ng-class="{'content__visible': $root.preloading.page == false}" class="content">
+  <div class="content_inner">
+    <div ng-controller="TableController" class="table">
+      <div ng-show="!$root.preloading.page" class="tablecontrols ng-cloak">
+        <script type="text/ng-template" id="modal.html">
+          <div class="modal-header">
+            <h3 class="modal-title">Create new pixel</h3>
+          </div>
+          <div class="modal-body">
+            <form role="form" id="pixel-form" action="#" method="get" class="pixelCreateForm">
+              <div class="basic-option row">
+                <div class="form-group col-lg-6 col-md-6">
+                  <label class="control-label">Pixel ID</label>
+                  <input type="text" name="id" ng-model="pixel.pixel_id" ng-disabled="mode == 'edit'" placeholder="Identifier for a new pixel" role="input" class="form-control"/>
+                </div>
+                <div class="form-group col-lg-6 col-md-6">
+                  <label class="control-label">Name</label>
+                  <input type="text" name="name" ng-model="pixel.name" placeholder="Displayed name" role="input" class="form-control"/>
+                </div>
+              </div>
+              <div class="sharing-options">
+                <h4 class="sharing-options_header">Sharing options</h4>
+                <hr class="hr"/>
+                <div ng-repeat="option in pixelOptions track by $index" class="sharing-option row">
+                  <div class="sharing-option-inner col-lg-12 col-md-12">
+                    <div class="form-group col-lg-6 col-md-6">
+                      <label class="control-label">Customer</label>
+
+                      <div class="input-group">
+                        <div dropdown="dropdown" class="input-group-btn">
+                          <input type="hidden" value="[[option.customer.type]]" name="id_externals-[[$index]]-type" id="id_externals-[[$index]]-type"/>
+                          <button type="button" ng-disabled="mode == 'edit' &amp;&amp; !option.new" dropdown-toggle="dropdown-toggle" class="btn btn-default dropdown-toggle">
+                            [[(customers | filter: {type:option.customer.type})[0].name]]<span class="caret"></span></button>
+                          <ul role="menu" class="dropdown-menu">
+                            <li ng-repeat="customer in customers" ng-class="{active: $parent.option.customer.type == customer.type }" ng-click="$parent.option.customer = customer">
+                              <span ng-bind="customer.name"></span></li>
+                          </ul>
+                        </div>
+                        <input type="text" ng-disabled="mode == 'edit' &amp;&amp; !option.new" id="id_externals-[[$index]]-customer_id" name="id_externals-[[$index]]-customer_id"
+                               ng-model="option.customer.id" data-fv-notempty="true" data-fv-notempty-message="Customer ID is required." data-fv-digits="true"
+                               data-fv-digits-message="Customer ID value can contain only digits." placeholder="Customer ID" role="input" class="form-control"/>
+                      </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6">
+                      <label class="control-label">Cost</label>
+
+                      <div class="input-group">
+                        <div dropdown="dropdown" class="input-group-btn">
+                          <input type="hidden" value="[[option.cpm.currency]]" id="id_externals-[[$index]]-currency" name="id_externals-[[$index]]-currency"/>
+                          <button type="button" dropdown-toggle="dropdown-toggle" class="btn btn-default dropdown-toggle">[[(currencies | filter:
+                            {id:option.cpm.currency})[0].name]]<span class="caret"></span></button>
+                          <ul role="menu" class="dropdown-menu">
+                            <li ng-repeat="currency in currencies" ng-class="{active: $parent.option.cpm.currency == currency.id }"
+                                ng-click="$parent.option.cpm.currency = currency.id"><span ng-bind="currency.name"></span></li>
+                          </ul>
+                        </div>
+                        <input type="text" role="input" id="id_externals-[[$index]]-cost" name="id_externals-[[$index]]-cost" ng-model="option.cpm.cost" data-fv-notempty="true"
+                               data-fv-notempty-message="Cost value is required." data-fv-regexp="true" data-fv-regexp-regexp="^[0-9]*.?[0-9]{1,2}$"
+                               data-fv-regexp-message="Cost value must be numeric and can't have less than 1 or more than 2 decimal places." placeholder="Cost Value"
+                               class="form-control"/>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="sharing-option_actions">
+                    <div ng-click="pixelOptions.splice($index, 1)" ng-show="option.new &amp;&amp; pixelOptions.length &gt; 1"
+                         class="sharing-option_action sharing-option_action__trash"><span aria-hidden="true" class="glyphicon glyphicon-trash"></span></div>
+                    <div ng-show="!option.new" class="sharing-option_action sharing-option_action__checkbox"><span>[[option.new]]</span>
+                      <input type="checkbox" id="id_externals-[[$index]]-enabled" name="id_externals-[[$index]]-enabled" ng-model="option.enabled"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="sharing-options_add">
+                  <div ng-click="pixelOptions.push(getDefaultOption())" class="btn btn-sm btn-success">Add Option</div>
+                </div>
+              </div>
+              <div class="modal-footer row">
+                <button type="submit" class="btn btn-primary">OK</button>
+                <button ng-click="cancel()" class="btn btn-warning">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </script>
+        <button ng-click="openModal('lg', 'create')" class="btn btn-success btn-md tablecontrol__create">Create Pixel</button>
+        <div tooltip="[[editPixelTooltip]]" ng-show="gridOptions.data.length" class="tablecontrol_wrapper">
+          <button ng-disabled="!$root.editedPixel" ng-click="openModal('lg', 'edit')" class="btn btn-success btn-md tablecontrol__edit">Edit Pixel</button>
+        </div>
+        <div tooltip="[[editPixelTooltip]]" ng-show="gridOptions.data.length" class="tablecontrol_wrapper">
+          <button ng-disabled="!$root.editedPixel" class="btn btn-success btn-md tablecontrol__preview">View Pixel Code</button>
+        </div>
+      </div>
+      <div ng-class="{'tablegrid__visible': gridOptions.data.length}" class="tablegrid">
+        <div role="alert" ng-hide="gridOptions.data.length" class="alert alert-info"><span>You haven't created any pixels yet! Please, create new one.</span></div>
+        <div ng-show="gridOptions.data.length" ui-grid="gridOptions" external-scopes="gridScope" ui-grid-selection="ui-grid-selection" ui-grid-pinning="ui-grid-pinning"
+             ui-grid-resize-columns="ui-grid-resize-columns" ui-grid-auto-resize="ui-grid-auto-resize" ui-grid-move-columns="ui-grid-move-columns"
+             ui-grid-exporter="ui-grid-exporter" ui-grid-save-state="ui-grid-save-state" class="tablegrid_grid"></div>
+      </div>
+    </div>
+  </div>
+</div>

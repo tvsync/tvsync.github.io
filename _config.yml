@@ -1,0 +1,16 @@
+# Site settings
+title: tvsync
+ngAppName: app
+exclude:
+  - "package.json"
+  - "node_modules"
+  - "bower.json"
+  - "gulpfile.js"
+  - "*.coffee"
+  - "*.less"
+  - "*.jade"
+email: yuri.malakhov87@gmail.com
+github: https://github.com/yuriMalakhov/tvsync
+description: "This is a default prototype tvsync."
+baseurl: ""
+url: ""
