@@ -1,0 +1,12 @@
+.no-margin {
+  margin: 0;
+}
+.to-left {
+  text-align: left;
+}
+.to-right {
+  text-align: right;
+}
+.center {
+  text-align: center;
+}

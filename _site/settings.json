@@ -1,0 +1,89 @@
+{
+  "pathToWatch": {
+    "jade": ["./_layouts/**/*.jade"],
+    "less": ["./css/dev/**/*.less"],
+    "css": ["./css/dev"],
+    "coffee": ["./js/dev/**/*.coffee"],
+    "js": ["./js/dev/**/*.js"]
+  },
+  "dev_borschik": {
+    "css": [
+      "node_modules/.bin/borschik --minimize=no -i ./css/dev/libs.css -o ./css/dev/libs.concat.css",
+      "node_modules/.bin/borschik --minimize=no -i ./css/dev/app.css -o ./css/dev/app.concat.css"
+    ],
+    "js": [
+      "node_modules/.bin/borschik --minimize=no -i ./js/dev/libs.js -o ./js/dev/libs.concat.js",
+      "node_modules/.bin/borschik --minimize=no -i ./js/dev/app.js -o ./js/dev/app.concat.js"
+    ]
+  },
+  "prod_borschik": {
+    "css": [
+      "node_modules/.bin/borschik --input=./css/dev/libs.css --output=./css/prod/libs.minified.css",
+      "node_modules/.bin/borschik --input=./css/dev/app.css --output=./css/prod/app.minified.css"
+    ],
+    "js": [
+      "node_modules/.bin/borschik --input=./js/dev/libs.js --output=./js/prod/libs.minified.js --tech-options='{\"uglify\":{\"compress\":{\"drop_debugger\": true,\"dead_code\":true,\"unused\":true, \"join_vars\": true, \"if_return\": true, \"drop_console\": true}}}'",
+      "node_modules/.bin/borschik --input=./js/dev/app.js --output=./js/prod/app.minified.js --tech-options='{\"uglify\":{\"compress\":{\"drop_debugger\": true,\"dead_code\":true,\"unused\":true, \"join_vars\": true, \"if_return\": true, \"drop_console\": true}}}'"
+    ]
+  },
+  "dev_files": {
+    "css": [
+      "./css/dev/libs.concat.css",
+      "./css/dev/app.concat.css"
+    ],
+    "js": [
+      "./js/dev/libs.concat.js",
+      "./js/dev/app.concat.js"
+    ]
+  },
+  "prod_files": {
+    "css": [
+      "./css/prod/libs.minified.css",
+      "./css/prod/app.minified.css"
+    ],
+    "js": [
+      "./js/prod/libs.minified.js",
+      "./js/prod/app.minified.js"
+    ]
+  },
+  "prod_files_to_inject": {
+    "css": [
+      "./css/prod/*.libs.min.css",
+      "./css/prod/*.app.min.css"
+    ],
+    "js": [
+      "./js/prod/*.libs.min.js",
+      "./js/prod/*.app.min.js"
+    ]
+  },
+  "clean": [
+    "./js/prod/*.js",
+    "./css/prod/*.css"
+  ],
+  "rmnonmin": [
+    "./js/prod/*.js",
+    "!./js/prod/*.min.js",
+    "./css/prod/*.css",
+    "!./css/prod/*.min.css"
+  ],
+  "watch": {
+    "css": [
+      "./css/dev/**/*.css",
+      "!./css/dev/libs.concat.css",
+      "!./css/dev/app.concat.css"
+    ],
+    "js": [
+      "./js/dev/**/*.js",
+      "!./js/dev/libs.concat.js",
+      "!./js/dev/app.concat.js"
+    ]
+  },
+  "injectTo": "./_layouts/default.html",
+  "sync": [
+    "./_site/index.html",
+    "./_site/js/dev/app.concat.js",
+    "./_site/js/dev/libs.concat.js",
+    "./_site/css/dev/app.concat.css",
+    "./_site/css/dev/libs.concat.css"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "tvsync",
+  "version": "0.0.0",
+  "homepage": "https://github.com/yuriMalakhov/tvsync",
+  "authors": [
+    "Юрий Малахов <yuri.malakhov87@gmail.com>"
+  ],
+  "description": "This is a default prototype tvsync.",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+  },
+  "resolutions": {
+  }
+}
